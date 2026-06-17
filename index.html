@@ -3,10 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Box Designer · Diseñador de cajas de cartón</title>
+    <title>BoxForge — La caja perfecta para cada envío</title>
+    <!-- La app que se publica es la versión estática de BoxForge (HTML puro,
+         sin build), que sí funciona en GitHub Pages. Redirigimos a la landing. -->
+    <meta http-equiv="refresh" content="0; url=./ui_kits/landing/index.html" />
+    <link rel="canonical" href="./ui_kits/landing/index.html" />
+    <style>
+      html, body { margin: 0; height: 100%; background: #0B0C0E; color: #8A909C;
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+      .c { height: 100%; display: flex; align-items: center; justify-content: center; }
+      a { color: #D4A574; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div class="c">
+      <p>Cargando BoxForge… si no avanza, <a href="./ui_kits/landing/index.html">entra aquí</a>.</p>
+    </div>
+    <script>location.replace('./ui_kits/landing/index.html');</script>
   </body>
 </html>
