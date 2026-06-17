@@ -39,6 +39,8 @@ export default function App() {
   const foldTarget = useRef<number | null>(null)
   // ¿El ratón está sobre el área de la caja?
   const [hovered, setHovered] = useState(false)
+  // Doble click la cierra a la fuerza aunque el ratón siga encima
+  const [forceClosed, setForceClosed] = useState(false)
 
   const product = useControls('Producto', {
     length: { value: 120, min: 10, max: 500, step: 1, label: 'Largo (mm)' },
@@ -68,10 +70,22 @@ export default function App() {
   }))
 
   // La caja se abre al pasar el ratón por encima y se cierra al salir.
-  // Con "Mantener abierta" se queda abierta independientemente del ratón.
+  // Con "Mantener abierta" se queda abierta; el doble click la cierra a la fuerza.
   useEffect(() => {
-    foldTarget.current = hovered || view.keepOpen ? FOLD_OPEN : FOLD_CLOSED
-  }, [hovered, view.keepOpen])
+    const open = !forceClosed && (hovered || view.keepOpen)
+    foldTarget.current = open ? FOLD_OPEN : FOLD_CLOSED
+  }, [hovered, view.keepOpen, forceClosed])
+
+  // Hover: al salir, reseteamos el cierre forzado para que vuelva a abrir al entrar
+  const handleHover = (h: boolean) => {
+    setHovered(h)
+    if (!h) setForceClosed(false)
+  }
+  // Doble click: cerrar de vuelta (y desactivar "Mantener abierta")
+  const handleClose = () => {
+    setForceClosed(true)
+    setView({ keepOpen: false })
+  }
 
   const result = useMemo(
     () =>
@@ -112,7 +126,8 @@ export default function App() {
           fold={fold}
           showProduct={view.showProduct}
           xray={view.xray}
-          onHover={setHovered}
+          onHover={handleHover}
+          onDoubleClick={handleClose}
         />
 
         <ContactShadows

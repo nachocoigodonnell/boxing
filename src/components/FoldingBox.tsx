@@ -22,6 +22,7 @@ interface Props {
   showProduct: boolean
   xray?: boolean // caja translúcida para ver el contenido
   onHover?: (hovered: boolean) => void // ratón sobre el área de la caja
+  onDoubleClick?: () => void // doble click para cerrar de vuelta
 }
 
 function Panel({
@@ -59,6 +60,7 @@ export default function FoldingBox({
   showProduct,
   xray = false,
   onHover,
+  onDoubleClick,
 }: Props) {
   const L = result.outer.x // largo (X)
   const H = result.outer.y // alto (Y)
@@ -183,6 +185,10 @@ export default function FoldingBox({
             onHover(true)
           }}
           onPointerOut={() => onHover(false)}
+          onDoubleClick={(e) => {
+            e.stopPropagation()
+            onDoubleClick?.()
+          }}
         >
           <boxGeometry args={[L * 1.1, H * 1.15, W * 1.1]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
