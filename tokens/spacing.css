@@ -1,0 +1,32 @@
+/* BoxForge — Spacing & sizing
+   Strict 4 / 8 px grid. Use these tokens for padding, gap, and margins. */
+
+:root {
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+
+  /* Component sizing */
+  --control-h-sm: 30px;
+  --control-h:    36px;   /* default input / button height */
+  --control-h-lg: 44px;   /* primary CTA, mobile hit target floor */
+
+  --sidebar-w:    340px;  /* configurator input panel */
+  --results-w:    320px;  /* configurator results panel */
+  --header-h:     56px;
+
+  /* Container widths */
+  --container-narrow: 720px;
+  --container:        1080px;
+  --container-wide:   1320px;
+}

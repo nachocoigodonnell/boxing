@@ -1,0 +1,4 @@
+/* BoxForge — Webfonts
+   Geist (sans) + Geist Mono — modern technical grotesque, tabular figures.
+   Loaded from Google Fonts; consumers get the @font-face closure via this import. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');

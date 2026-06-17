@@ -1,0 +1,13 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BoxForge">
+
+  <g stroke-linejoin="round" stroke-linecap="round">
+
+    <path d="M6 13 L20 21 L20 36 L6 28 Z" fill="#A6743F" stroke="#7E5730" stroke-width="1.1"></path>
+
+    <path d="M34 13 L20 21 L20 36 L34 28 Z" fill="#C28E58" stroke="#7E5730" stroke-width="1.1"></path>
+
+    <path d="M20 5 L34 13 L20 21 L6 13 Z" fill="#D4A574" stroke="#7E5730" stroke-width="1.1"></path>
+
+    <path d="M13 9 L27 17" stroke="#7E5730" stroke-width="1" opacity="0.55"></path>
+  </g>
+</svg>

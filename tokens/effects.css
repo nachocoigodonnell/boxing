@@ -1,0 +1,38 @@
+/* BoxForge — Radii, shadows, motion
+   Soft, low-contrast elevation. Consistent corner radii. Discreet motion. */
+
+:root {
+  /* Corner radii */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;    /* inputs, buttons, badges */
+  --radius-lg:   12px;   /* cards */
+  --radius-xl:   16px;   /* large panels, modals */
+  --radius-2xl:  22px;
+  --radius-full: 999px;
+
+  /* Elevation — very soft, mostly for floating UI on dark.
+     On dark surfaces a 1px top highlight reads better than a drop shadow. */
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md:  0 6px 20px -6px rgba(0, 0, 0, 0.45);
+  --shadow-lg:  0 18px 48px -12px rgba(0, 0, 0, 0.55);
+  --shadow-xl:  0 32px 80px -20px rgba(0, 0, 0, 0.65);
+
+  /* Hairline highlight to lift surfaces off the canvas (dark mode) */
+  --ring-hairline: inset 0 1px 0 rgba(255, 255, 255, 0.04); /* @kind shadow */
+  --ring-focus:    0 0 0 3px var(--accent-ring);
+  --ring-card:     inset 0 0 0 1px var(--border-subtle);
+
+  /* Motion — discreet, well-eased, never bouncy on UI chrome */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+
+  --dur-fast:   120ms; /* @kind other */
+  --dur-base:   180ms; /* @kind other */
+  --dur-slow:   280ms; /* @kind other */
+  --dur-fold:   900ms;   /* @kind other */
+
+  /* Subtle technical backdrop grid (used sparingly on hero / stage) */
+  --backdrop-grid: rgba(255, 255, 255, 0.025); /* @kind color */
+}

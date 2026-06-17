@@ -1,0 +1,48 @@
+/* BoxForge — light base resets shared by specimens, cards, kits.
+   Tokens only; no component styling here. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--text-primary);
+  background: var(--surface-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv01" 1, "ss01" 1;
+}
+
+::selection {
+  background: var(--accent-quiet-2);
+  color: var(--text-primary);
+}
+
+/* Thin, technical scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-6) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--gray-6);
+  border-radius: var(--radius-full);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--gray-7); background-clip: content-box; }
+
+a { color: var(--text-link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* Focus-visible ring — used by all interactive components */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}

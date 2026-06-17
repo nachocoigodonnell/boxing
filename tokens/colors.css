@@ -1,0 +1,133 @@
+/* BoxForge — Color system
+   Dark-primary, anthracite neutral base + a single warm-sand accent that
+   evokes kraft cardboard. Status colors (green / amber / red) are reserved
+   strictly for feedback. Light tokens are provided under [data-theme="light"].
+
+   Naming: base ramps first (raw values), then semantic aliases below. */
+
+:root {
+  /* ----- Neutral base ramp (dark) -----
+     bg-0 deepest app canvas → bg-3 raised input surface */
+  --gray-0:  #0B0C0E;   /* app canvas */
+  --gray-1:  #101115;   /* panel / sidebar */
+  --gray-2:  #16181D;   /* card surface */
+  --gray-3:  #1C1F25;   /* raised / input */
+  --gray-4:  #24272E;   /* hover surface */
+  --gray-5:  #2D313A;   /* active surface */
+  --gray-6:  #3A3F4A;   /* strong border / divider */
+  --gray-7:  #565C68;   /* tertiary text / disabled fg */
+  --gray-8:  #8A909C;   /* secondary text */
+  --gray-9:  #B8BDC7;   /* muted bright text */
+  --gray-10: #E9EBEF;   /* primary text */
+  --gray-11: #F7F8FA;   /* highest-contrast text */
+
+  /* ----- Accent: warm sand / kraft ----- */
+  --sand-100: #F7ECDD;
+  --sand-200: #EBD3B4;
+  --sand-300: #E0BE92;
+  --sand-400: #D4A574;  /* ← primary accent */
+  --sand-500: #C28E58;
+  --sand-600: #A6743F;
+  --sand-700: #7E5730;
+
+  /* Real corrugated-cardboard color used by the 3D viewer. Not a UI accent. */
+  --kraft:        #C49A5F;
+  --kraft-flap:   #B9883F;
+
+  /* ----- Status hues (dark-tuned) ----- */
+  --green-400:  #5FB58A;
+  --green-500:  #4C9E76;
+  --amber-400:  #E0A23D;
+  --amber-500:  #C9892A;
+  --red-400:    #E5655F;
+  --red-500:    #CE4C46;
+  --blue-400:   #5B9BE0;  /* informational / product fill reference */
+
+  /* ===== Semantic aliases (use these in components) ===== */
+
+  /* Surfaces */
+  --surface-canvas:   var(--gray-0);
+  --surface-panel:    var(--gray-1);
+  --surface-card:     var(--gray-2);
+  --surface-raised:   var(--gray-3);
+  --surface-hover:    var(--gray-4);
+  --surface-active:   var(--gray-5);
+  --surface-inset:    #08090B;
+
+  /* Text */
+  --text-primary:     var(--gray-11);
+  --text-secondary:   var(--gray-8);
+  --text-tertiary:    var(--gray-7);
+  --text-disabled:    #4A4F59;
+  --text-on-accent:   #20160A;   /* dark ink on the light sand accent */
+  --text-link:        var(--sand-300);
+
+  /* Borders / dividers — hairline, low-contrast */
+  --border-subtle:    rgba(255, 255, 255, 0.06);
+  --border-default:   rgba(255, 255, 255, 0.10);
+  --border-strong:    rgba(255, 255, 255, 0.16);
+  --border-focus:     var(--sand-400);
+
+  /* Accent semantics */
+  --accent:           var(--sand-400);
+  --accent-hover:     var(--sand-300);
+  --accent-active:    var(--sand-500);
+  --accent-quiet:     rgba(212, 165, 116, 0.12);
+  --accent-quiet-2:   rgba(212, 165, 116, 0.20);
+  --accent-ring:      rgba(212, 165, 116, 0.35);
+
+  /* Status semantics */
+  --success:          var(--green-400);
+  --success-quiet:    rgba(95, 181, 138, 0.14);
+  --warning:          var(--amber-400);
+  --warning-quiet:    rgba(224, 162, 61, 0.14);
+  --danger:           var(--red-400);
+  --danger-quiet:     rgba(229, 101, 95, 0.14);
+  --info:             var(--blue-400);
+  --info-quiet:       rgba(91, 155, 224, 0.14);
+
+  /* Viewer stage */
+  --stage-bg:         #0E1116;
+  --stage-grid-major: #27303d;
+  --stage-grid-minor: #1a212b;
+}
+
+/* ===== Light theme override ===== */
+[data-theme="light"] {
+  --gray-0:  #FCFCFD;
+  --gray-1:  #FFFFFF;
+  --gray-2:  #FFFFFF;
+  --gray-3:  #F5F6F8;
+  --gray-4:  #EEF0F3;
+  --gray-5:  #E4E7EC;
+  --gray-6:  #D7DBE2;
+  --gray-7:  #9298A4;
+  --gray-8:  #5C636F;
+  --gray-9:  #3E434C;
+  --gray-10: #1E2128;
+  --gray-11: #0C0E12;
+
+  --surface-canvas:   #F4F5F7;
+  --surface-panel:    #FFFFFF;
+  --surface-card:     #FFFFFF;
+  --surface-raised:   #FFFFFF;
+  --surface-hover:    #F2F3F6;
+  --surface-active:   #E9EBF0;
+  --surface-inset:    #EDEEF1;
+
+  --text-primary:     #0C0E12;
+  --text-secondary:   #5C636F;
+  --text-tertiary:    #8A909C;
+  --text-disabled:    #B4B9C2;
+  --text-on-accent:   #20160A;
+  --text-link:        var(--sand-600);
+
+  --border-subtle:    rgba(13, 16, 23, 0.06);
+  --border-default:   rgba(13, 16, 23, 0.10);
+  --border-strong:    rgba(13, 16, 23, 0.16);
+
+  --accent-quiet:     rgba(166, 116, 63, 0.10);
+  --accent-quiet-2:   rgba(166, 116, 63, 0.16);
+
+  --stage-bg:         #ECEDEF;
+}
