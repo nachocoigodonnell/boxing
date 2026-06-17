@@ -1,9 +1,13 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei'
-import { useControls, button } from 'leva'
+import { useControls } from 'leva'
 import { computePacking } from './lib/packing'
 import FoldingBox from './components/FoldingBox'
+
+// Estados de plegado: 1 = caja cerrada/montada · ~0.62 = abierta (solapas abiertas)
+const FOLD_CLOSED = 1
+const FOLD_OPEN = 0.62
 
 // Anima el plegado UNA vez hacia un objetivo (0 = abrir, 1 = cerrar) y se detiene.
 function FoldAnimator({
@@ -33,7 +37,8 @@ function FoldAnimator({
 export default function App() {
   // Objetivo de la animación de plegado (null = sin animar, control manual)
   const foldTarget = useRef<number | null>(null)
-  const foldRef = useRef(1)
+  // ¿El ratón está sobre el área de la caja?
+  const [hovered, setHovered] = useState(false)
 
   const product = useControls('Producto', {
     length: { value: 120, min: 10, max: 500, step: 1, label: 'Largo (mm)' },
@@ -56,17 +61,17 @@ export default function App() {
   })
 
   const [view, setView] = useControls('Vista', () => ({
-    'Abrir / Cerrar caja': button(() => {
-      // Anima hacia el estado contrario al actual
-      foldTarget.current = foldRef.current > 0.5 ? 0 : 1
-    }),
-    fold: { value: 1, min: 0, max: 1, step: 0.01, label: 'Plegado' },
+    keepOpen: { value: false, label: 'Mantener abierta' },
     showProduct: { value: true, label: 'Ver contenido' },
     xray: { value: false, label: 'Caja transparente' },
+    fold: { value: 1, min: 0, max: 1, step: 0.01, label: 'Plegado (manual)' },
   }))
 
-  // Mantiene foldRef sincronizado con el valor actual para el botón y el animador
-  foldRef.current = view.fold
+  // La caja se abre al pasar el ratón por encima y se cierra al salir.
+  // Con "Mantener abierta" se queda abierta independientemente del ratón.
+  useEffect(() => {
+    foldTarget.current = hovered || view.keepOpen ? FOLD_OPEN : FOLD_CLOSED
+  }, [hovered, view.keepOpen])
 
   const result = useMemo(
     () =>
@@ -107,6 +112,7 @@ export default function App() {
           fold={fold}
           showProduct={view.showProduct}
           xray={view.xray}
+          onHover={setHovered}
         />
 
         <ContactShadows

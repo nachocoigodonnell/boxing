@@ -21,6 +21,7 @@ interface Props {
   fold: number // 0 = plano (desplegado), 1 = montado
   showProduct: boolean
   xray?: boolean // caja translúcida para ver el contenido
+  onHover?: (hovered: boolean) => void // ratón sobre el área de la caja
 }
 
 function Panel({
@@ -36,7 +37,7 @@ function Panel({
 }) {
   const transparent = opacity < 1
   return (
-    <mesh castShadow={!transparent} receiveShadow>
+    <mesh castShadow={!transparent} receiveShadow raycast={() => null}>
       <boxGeometry args={size} />
       <meshStandardMaterial
         color={color}
@@ -57,6 +58,7 @@ export default function FoldingBox({
   fold,
   showProduct,
   xray = false,
+  onHover,
 }: Props) {
   const L = result.outer.x // largo (X)
   const H = result.outer.y // alto (Y)
@@ -154,7 +156,7 @@ export default function FoldingBox({
       {/* Contenido (unidades del producto) */}
       {productVisible &&
         units.map((p, i) => (
-          <mesh key={i} position={p} castShadow>
+          <mesh key={i} position={p} castShadow raycast={() => null}>
             <boxGeometry
               args={[
                 result.cell.x * 0.99,
@@ -170,6 +172,22 @@ export default function FoldingBox({
             />
           </mesh>
         ))}
+
+      {/* Área invisible de hover: estable (no se mueve al plegar) y único
+          objeto que recibe el ratón, para detectar entrada/salida sin parpadeos. */}
+      {onHover && (
+        <mesh
+          position={[0, H / 2, 0]}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            onHover(true)
+          }}
+          onPointerOut={() => onHover(false)}
+        >
+          <boxGeometry args={[L * 1.1, H * 1.15, W * 1.1]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      )}
     </group>
   )
 }
