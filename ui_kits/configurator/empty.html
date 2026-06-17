@@ -1,0 +1,164 @@
+<!-- @dsCard group="Configurator" viewport="1440x900" name="Estado vacío / inicial" subtitle="Onboarding antes de introducir datos · viewer en reposo + resultados placeholder" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BoxForge · Empezar</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html, body { margin: 0; height: 100%; background: var(--surface-canvas); overflow: hidden; }
+  #root { height: 100vh; }
+  .bf-app { display: flex; flex-direction: column; height: 100vh; }
+
+  .bf-header { height: var(--header-h); flex: none; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; background: var(--surface-panel); border-bottom: 1px solid var(--border-subtle); }
+  .bf-header-left { display: flex; align-items: center; gap: 14px; }
+  .bf-logo { display: inline-flex; align-items: center; gap: 9px; }
+  .bf-logo-text { font: 600 16px var(--font-sans); letter-spacing: -0.3px; color: var(--text-primary); }
+  .bf-logo-text span { color: var(--accent); }
+  .bf-divider { width: 1px; height: 22px; background: var(--border-default); }
+  .bf-project { display: flex; flex-direction: column; gap: 1px; white-space: nowrap; }
+  .bf-project-name { font: 500 13px var(--font-sans); color: var(--text-secondary); }
+  .bf-project-meta { font: 400 11px var(--font-sans); color: var(--text-tertiary); }
+  .bf-header-actions { display: flex; align-items: center; gap: 4px; }
+
+  .bf-main { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--sidebar-w) 1fr var(--results-w); }
+  .bf-col { min-height: 0; overflow-y: auto; }
+  .bf-col-inputs { border-right: 1px solid var(--border-subtle); background: var(--surface-panel); }
+  .bf-col-results { border-left: 1px solid var(--border-subtle); background: var(--surface-panel); }
+  .bf-col-stage { display: flex; flex-direction: column; min-width: 0; background: var(--surface-canvas); padding: 16px; gap: 16px; }
+
+  .inputs { display: flex; flex-direction: column; gap: 16px; padding: 16px; }
+  .field-stack { display: flex; flex-direction: column; gap: 16px; }
+
+  /* empty viewer stage */
+  .vs-empty { position: relative; flex: 1 0 auto; min-height: 440px; border-radius: var(--radius-xl);
+    background:
+      linear-gradient(var(--backdrop-grid) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(90deg, var(--backdrop-grid) 1px, transparent 1px) 0 0 / 28px 28px,
+      var(--stage-bg);
+    border: 1px solid var(--border-subtle); box-shadow: var(--ring-hairline);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+  .vs-empty__icon { width: 76px; height: 76px; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center;
+    background: var(--accent-quiet); color: var(--accent); border: 1px solid var(--accent-quiet-2); }
+  .vs-empty__icon svg { width: 38px; height: 38px; }
+  .vs-empty h2 { margin: 0; font: 600 20px var(--font-sans); letter-spacing: -0.3px; color: var(--text-primary); }
+  .vs-empty p { margin: 0; max-width: 340px; font-size: var(--fs-body); line-height: 1.55; color: var(--text-secondary); text-wrap: pretty; }
+  .vs-empty__steps { display: flex; gap: 8px; margin-top: 4px; }
+  .vs-empty__step { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px;
+    color: var(--text-tertiary); background: var(--surface-card); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full); padding: 5px 11px; }
+  .vs-empty__step b { color: var(--accent); }
+
+  /* results placeholder */
+  .results { display: flex; flex-direction: column; gap: 16px; padding: 16px; }
+  .ph-ring { display: flex; align-items: center; gap: 18px; padding: 18px; background: var(--surface-card);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--ring-hairline); }
+  .ph-ring__circle { width: 96px; height: 96px; border-radius: 50%; border: 9px solid var(--gray-4); flex: none; position: relative; }
+  .ph-ring__circle::after { content: '—'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 22px; color: var(--text-tertiary); }
+  .ph-line { background: var(--gray-3); border-radius: var(--radius-xs); height: 12px; }
+  .ph-card { padding: 16px; background: var(--surface-card); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); box-shadow: var(--ring-hairline); display: flex; flex-direction: column; gap: 14px; }
+  .ph-stat { display: flex; flex-direction: column; gap: 7px; }
+  .ph-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel" src="Icons.kit.js"></script>
+<script type="text/babel">
+  const { Button, Card, InputField, SliderField, Badge } = window.BoxForgeDesignSystem_c042fe;
+  const I = window.BFIcons;
+
+  function EmptyScreen() {
+    return (
+      <div className="bf-app">
+        <header className="bf-header">
+          <div className="bf-header-left">
+            <span className="bf-logo">
+              <img src="../../assets/boxforge-mark.svg" width="26" height="26" alt="" />
+              <span className="bf-logo-text">Box<span>Forge</span></span>
+            </span>
+            <span className="bf-divider" />
+            <span className="bf-project">
+              <span className="bf-project-name">Nuevo presupuesto</span>
+              <span className="bf-project-meta">Sin guardar</span>
+            </span>
+          </div>
+          <div className="bf-header-actions">
+            <Button variant="ghost" size="sm" iconLeft={<I.Save size={15} />}>Guardar</Button>
+            <Button variant="secondary" size="sm" disabled iconLeft={<I.Download size={15} />}>Exportar PDF</Button>
+          </div>
+        </header>
+
+        <main className="bf-main">
+          <aside className="bf-col bf-col-inputs">
+            <div className="inputs">
+              <Card eyebrow="Paso 1" title="Producto" icon={<I.Package size={16} />} bodyTight>
+                <div className="field-stack">
+                  <InputField label="Referencia" value="" placeholder="SKU-0042" />
+                  <InputField label="Largo" numeric value="" placeholder="0" suffix="mm" iconLeft={<I.Ruler size={16} />} />
+                  <InputField label="Ancho" numeric value="" placeholder="0" suffix="mm" iconLeft={<I.Ruler size={16} />} />
+                  <InputField label="Alto" numeric value="" placeholder="0" suffix="mm" iconLeft={<I.Ruler size={16} />} />
+                  <InputField label="Peso por unidad" numeric value="" placeholder="0" suffix="g" iconLeft={<I.Weight size={16} />} />
+                </div>
+              </Card>
+              <Button block disabled iconLeft={<I.Calculator size={16} />}>Calcular caja óptima</Button>
+            </div>
+          </aside>
+
+          <section className="bf-col bf-col-stage">
+            <div className="vs-empty">
+              <span className="vs-empty__icon"><I.Box size={38} /></span>
+              <h2>Empieza por tu producto</h2>
+              <p>Introduce las medidas y el peso de lo que quieres enviar. Calcularemos la caja óptima y la verás aquí en 3D.</p>
+              <div className="vs-empty__steps">
+                <span className="vs-empty__step"><b>1</b> Producto</span>
+                <span className="vs-empty__step"><b>2</b> Pedido</span>
+                <span className="vs-empty__step"><b>3</b> Caja óptima</span>
+              </div>
+            </div>
+          </section>
+
+          <aside className="bf-col bf-col-results">
+            <div className="results">
+              <div className="ph-ring">
+                <span className="ph-ring__circle" />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <span className="ph-eyebrow">Disposición interna</span>
+                  <span className="ph-line" style={{ width: 96 }} />
+                  <span className="ph-line" style={{ width: 64, height: 10 }} />
+                </div>
+              </div>
+              <div className="ph-card">
+                <span className="ph-eyebrow">Medidas y carga</span>
+                {[88, 72, 80, 60].map((w, i) => (
+                  <div className="ph-stat" key={i}>
+                    <span className="ph-line" style={{ width: w + 40, height: 9, background: 'var(--gray-3)' }} />
+                    <span className="ph-line" style={{ width: w + '%' }} />
+                  </div>
+                ))}
+              </div>
+              <Card variant="flush" padded={false}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 2px' }}>
+                  <Badge tone="outline">Esperando datos</Badge>
+                </div>
+              </Card>
+            </div>
+          </aside>
+        </main>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<EmptyScreen />);
+</script>
+</body>
+</html>

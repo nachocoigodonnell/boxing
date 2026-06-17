@@ -1,0 +1,9 @@
+<svg width="172" height="34" viewBox="0 0 172 34" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BoxForge">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M5 11 L17 18 L17 30 L5 23 Z" fill="#A6743F" stroke="#7E5730" stroke-width="1"></path>
+    <path d="M29 11 L17 18 L17 30 L29 23 Z" fill="#C28E58" stroke="#7E5730" stroke-width="1"></path>
+    <path d="M17 4 L29 11 L17 18 L5 11 Z" fill="#D4A574" stroke="#7E5730" stroke-width="1"></path>
+    <path d="M11 7.5 L23 14.5" stroke="#7E5730" stroke-width="0.9" opacity="0.55"></path>
+  </g>
+  <text x="42" y="24" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="21" font-weight="600" letter-spacing="-0.4" fill="#F7F8FA">Box<tspan fill="#D4A574">Forge</tspan></text>
+</svg>
